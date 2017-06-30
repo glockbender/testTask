@@ -39,7 +39,7 @@ public class Bootstrap {
 
             ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
-            context.setContextPath("/test");
+            context.setContextPath("/");
 
             server.setHandler(context);
 

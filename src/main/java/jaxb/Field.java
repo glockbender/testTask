@@ -16,4 +16,12 @@ public class Field {
     private int id;
     @XmlAttribute
     private String value;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }

@@ -29,13 +29,11 @@ public class TcpServer extends Thread{
     @Override
     public void run() {
 
-
-
         try (ServerSocket serverSocket = getServerSocket();
              Socket socket = getSocket(serverSocket);
              InputStream in = socket.getInputStream();
-             BufferedInputStream dataIn = new BufferedInputStream(in);
-             OutputStream out = socket.getOutputStream()){
+             BufferedInputStream buffIn = new BufferedInputStream(in,bufferSize);
+             BufferedOutputStream out = new BufferedOutputStream(socket.getOutputStream(),128)){
 
             byte[] bytes = new byte[bufferSize];
             final int magicSeqLen = magicSequence.length();
@@ -46,7 +44,7 @@ public class TcpServer extends Thread{
                 int readByte;
                 boolean isApproved = false;
 
-                while ((readByte = dataIn.read()) !=-1){
+                while ((readByte = buffIn.read()) !=-1){
 
                     if (i==magicSeqLen && !(isApproved = isApprovedData(bytes))){
                         LOG.error("Data isn't approved!");
@@ -59,6 +57,8 @@ public class TcpServer extends Thread{
 
                     bytes[i++] = (byte)readByte;
                 }
+
+                LOG.debug("End reading. bytes: "+i);
 
                 if (i!=0){
                     String s;

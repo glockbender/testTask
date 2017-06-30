@@ -17,4 +17,12 @@ public class Account {
 
     @XmlValue
     private String value;
+
+    public Type getType() {
+        return type;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }

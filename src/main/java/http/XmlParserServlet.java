@@ -72,30 +72,26 @@ public class XmlParserServlet extends HttpServlet {
         try (Socket socket = client.initSocket();
              BufferedOutputStream out = new BufferedOutputStream(socket.getOutputStream(),buffSize);
              InputStream in = socket.getInputStream();
-             StringWriter writer = new StringWriter()){
+             StringWriter writer = new StringWriter()) {
 
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(writer,envelope);
+            new ObjectMapper().writeValue(writer, envelope);
             writer.flush();
 
             final String s = writer.toString();
+            LOG.info("CREATING JSON:\n"+s);
             out.write(magicSeq.getBytes());
             out.write(ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putShort((short) s.length()).array());
             out.write(s.getBytes("utf-16"));
             out.flush();
-
+//При добавлении данного кода (не важно в цикле или без. Судя по всему виноват in.read()) приложение виснет и не понятно в чем дело.
 //            StringBuilder response = new StringBuilder();
-
-//            while (true){
 //
-//                int readByte;
-//                while ((readByte = in.read())!=-1){
-//                    response.append((char)readByte);
-//                }
-//                if (response.length()>0){
-//                    LOG.info("GET RESPONSE FROM SERVER: "+response.toString());
-//                    break;
-//                }
+//            int readByte;
+//            while ((readByte = in.read()) != -1) {
+//                response.append((char) readByte);
+//            }
+//            if (response.length() > 0) {
+//                LOG.info("GET RESPONSE FROM SERVER: " + response.toString());
 //            }
 
         }catch (IOException e){

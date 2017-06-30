@@ -20,7 +20,7 @@ import java.io.StringReader;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Envelope {
 
-    public final static Logger LOG = LogManager.getLogger(Envelope.class);
+    private final static Logger LOG = LogManager.getLogger(Envelope.class);
 
     @XmlRootElement(name = "Body")
     static class Body{
@@ -50,5 +50,9 @@ public class Envelope {
             LOG.error("An error occurred when try to parse xml string to Envelope instance!",e);
             return null;
         }
+    }
+
+    public Body getBody() {
+        return body;
     }
 }
