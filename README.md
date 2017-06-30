@@ -48,6 +48,8 @@ tcp.dest.port=1234
 XML пакет необходимо разобрать в объект $package.jaxb.Envelope используя технологию JAXB.
 
 Пример XML пакета:
+
+```xml
 <Envelope xmlns:urn="wsapi:Payment" xmlns:uts="wsapi:Utils">
 <Body>
 <urn:sendPayment>
@@ -65,6 +67,7 @@ XML пакет необходимо разобрать в объект $package.
 </urn:sendPayment>
 </Body>
 </Envelope>
+```
 
 В случае ошибки при разборе XML пакета, вывести информацию предоставленную парсером на страницу ошибки и показать пользователю. Записать информацию в лог.
 
